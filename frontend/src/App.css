@@ -1,9 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('src/assets/midpoint background (Desktop Wallpaper).png'); /* Replace with your image path */
-    background-size: cover; /* Makes the image cover the entire viewport */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents repeating the image */
+    background-image: url('src/assets/midpoint background (Desktop Wallpaper).png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #333;
     margin: 0;
     padding: 0;
@@ -15,28 +15,25 @@ body {
 
 .header {
     text-align: center;
-    margin-bottom: 0.01rem; /* Space between header and container */
+    margin-bottom: 0.01rem;
     margin-top: 0.01rem;
 }
 
 .header img {
-    width: 500px; /* Set width to a smaller value, adjust as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 500px;
+    height: auto;
 }
 
 #container {
     display: flex;
     width: 90vw;
-    /* Adjust width as needed */
     max-width: 1200px;
-    /* Maximum width to limit expansion */
     height: 80vh;
-    /* Adjust height as needed */
     padding: 1rem;
     box-sizing: border-box;
-    gap: 1rem; /* Space between map and sidebar */
-    border-radius: 10px; /* Rounded corners for container */
-    background-color: #f3e6f9; /* Lighter shade of purple for the container */
+    gap: 1rem;
+    border-radius: 10px;
+    background-color: #f3e6f9;
     box-shadow: 0 4px 8px rgba(133, 23, 137, 0.383);
 }
 
@@ -45,31 +42,39 @@ body {
     height: 100%;
     width: 100%;
     border-radius: 10px;
-    background-color: #f3e6f9; /* Lighter shade of purple for the map */
+    background-color: #f3e6f9;
     box-shadow: 0 4px 8px rgba(133, 23, 137, 0.383);
     border: 2px solid #f3e6f9;
 }
 
 #sidebar {
     flex: 1;
-    /* Adjust flex basis */
     padding: 1.5rem;
-    /* Padding inside the sidebar */
     background-color: #f3e6f9;
-    /* Lighter shade of purple for the sidebar */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(133, 23, 137, 0.383);
     border: 2px solid #f3e6f9;
-    max-height: 100%; /* Ensure sidebar doesn’t overflow */
-    overflow-y: auto; /* Scroll if content exceeds height */
+    max-height: 100%;
+    overflow-y: auto;
+    position: relative;
+    /* Ensure that children are positioned relative to the sidebar */
+}
+
+#results-display-container {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Align items at the start of the container */
+    padding: 1rem;
+    overflow-y: auto;
+    /* Allow scrolling if content exceeds the container */
 }
 
 label {
     display: block;
     margin-bottom: 0.5rem;
-    /* Space between labels */
     font-weight: bold;
-    /* Make labels bold */
 }
 
 input[type="text"],
@@ -77,36 +82,32 @@ input[type="time"],
 input[type="date"],
 select {
     width: 100%;
-    /* Full width for inputs */
     padding: 0.5rem;
-    border: 1px solid #f3e6f9; /* Light border for inputs */
+    border: 1px solid #f3e6f9;
     border-radius: 5px;
     margin-bottom: 1rem;
-    /* Space between inputs */
 }
 
 button {
-    background-color: #007bff; /* Button background color */
-    color: #f3e6f9; /* Button text color */
+    background-color: #007bff;
+    color: #f3e6f9;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s, opacity 0.3s;
-    /* Smooth transition for hover and disabled states */
 }
 
 button:hover {
     background-color: #0056b3;
-    /* Darker color on hover */
 }
 
 button:disabled {
-    background-color: #f3e6f9; /* Grey background for disabled state */
-    color: #666666; /* Grey text color for disabled state */
-    cursor: not-allowed; /* Change cursor to indicate disabled state */
-    opacity: 0.6; /* Make button slightly transparent */
+    background-color: #f3e6f9;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 pre {
@@ -115,7 +116,5 @@ pre {
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
-    /* Light border for the pre block */
     overflow-x: auto;
-    /* Horizontal scroll for long lines */
 }

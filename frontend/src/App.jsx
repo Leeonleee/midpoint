@@ -129,165 +129,164 @@ const App = () => {
   return (
     <div>
       <div className='header'>
-        <img src="src/assets/header.png" alt="Midpoint Logo"></img>
+        <img src="src/assets/header.png" alt="Midpoint Logo" />
       </div>
       <div id="container">
         <div id="sidebar">
-          <div id="autocomplete-bars">
-            <label>
-            My Location
-            </label>
-            <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
-            <label>
-            My Friend's Location
-            </label>
-            <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
-          </div>
-          <div>
-            <label>
-              Radius (m):
-              <select value={coordinates.radius} onChange={updateRadius}>
-                <option value={500}>500</option>
-                <option value={1000}>1000</option>
-                <option value={2000}>2000</option>
-                <option value={5000}>5000</option>
-              </select>
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                value="restaurant"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("restaurant")}
+          {response ? (
+            <div id="results-display-container">
+              <ResultsDisplay
+                results={response.places || []} // Adjust according to your response structure
+                onSelect={handleSelect}
+                onClose={handleCloseResults}
               />
-              Restaurant
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="amusement_park"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("amusement_park")}
-              />
-              Amusement Park
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="art_gallery"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("art_gallery")}
-              />
-              Art Gallery
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="cafe"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("cafe")}
-              />
-              Cafe
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="gym"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("gym")}
-              />
-              Gym
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="bar"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("bar")}
-              />
-              Bar
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="library"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("library")}
-              />
-              Library
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="movie_theatre"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("movie_theatre")}
-              />
-              Movie Theatre
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="museum"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("museum")}
-              />
-              Museum
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="tourist_attraction"
-                onChange={handleTypeChange}
-                checked={coordinates.type.includes("tourist_attraction")}
-              />
-              Tourist Attraction
-            </label>
-          </div>
-          <div>
-            <label>
-              Date:
-              <input
-                type="date"
-                value={coordinates.date}
-                onChange={handleDateChange}
-              />
-            </label>
-            <label>
-              Start Time:
-              <input
-                type="time"
-                value={coordinates.startTime}
-                onChange={handleStartTimeChange}
-              />
-            </label>
-            <label>
-              End Time:
-              <input
-                type="time"
-                value={coordinates.endTime}
-                onChange={handleEndTimeChange}
-              />
-            </label>
-          </div>
-          <pre>
-            {JSON.stringify(coordinates, null, 2)}
-          </pre>
-          <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
-            Submit
-          </button>
+            </div>
+          ) : (
+            <>
+              <div id="autocomplete-bars">
+                <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
+                <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
+              </div>
+              <div>
+                <label>
+                  Radius (m):
+                  <select value={coordinates.radius} onChange={updateRadius}>
+                    <option value={500}>500</option>
+                    <option value={1000}>1000</option>
+                    <option value={2000}>2000</option>
+                    <option value={5000}>5000</option>
+                  </select>
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="restaurant"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("restaurant")}
+                  />
+                  Restaurant
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="amusement_park"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("amusement_park")}
+                  />
+                  Amusement Park
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="art_gallery"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("art_gallery")}
+                  />
+                  Art Gallery
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="cafe"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("cafe")}
+                  />
+                  Cafe
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="gym"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("gym")}
+                  />
+                  Gym
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="bar"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("bar")}
+                  />
+                  Bar
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="library"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("library")}
+                  />
+                  Library
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="movie_theatre"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("movie_theatre")}
+                  />
+                  Movie Theatre
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="museum"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("museum")}
+                  />
+                  Museum
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="tourist_attraction"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("tourist_attraction")}
+                  />
+                  Tourist Attraction
+                </label>
+              </div>
+              <div>
+                <label>
+                  Date:
+                  <input
+                    type="date"
+                    value={coordinates.date}
+                    onChange={handleDateChange}
+                  />
+                </label>
+                <label>
+                  Start Time:
+                  <input
+                    type="time"
+                    value={coordinates.startTime}
+                    onChange={handleStartTimeChange}
+                  />
+                </label>
+                <label>
+                  End Time:
+                  <input
+                    type="time"
+                    value={coordinates.endTime}
+                    onChange={handleEndTimeChange}
+                  />
+                </label>
+              </div>
+              <pre>
+                {JSON.stringify(coordinates, null, 2)}
+              </pre>
+              <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
+                Submit
+              </button>
+            </>
+          )}
         </div>
         <div id="map" ref={mapRef}></div>
       </div>
-      {response && (
-        <ResultsDisplay
-          results={response.places || []} // Adjust according to your response structure
-          onSelect={handleSelect}
-          onClose={handleCloseResults}
-        />
-      )}
     </div>
   );
 };

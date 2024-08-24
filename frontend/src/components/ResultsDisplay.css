@@ -1,37 +1,72 @@
 /* ResultsDisplay.css */
-.results-display {
-    position: fixed;
-    top: 10%;
-    right: 10%;
-    width: 300px;
+/* .results-display {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(100% - 1rem);
     background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 1rem;
-    z-index: 1000;
-    /* Ensure it’s on top of other content */
+    z-index: 100;
+    box-sizing: border-box;
+    overflow-y: auto;
+} */
+.results-display {
+    width: 100%;
+    /* Make sure it uses the full width of the sidebar */
+    max-height: calc(100vh - 2rem);
+    /* Adjust to fit within the sidebar height */
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    box-sizing: border-box;
+    /* Include padding in the width/height calculation */
+    overflow-y: auto;
+    /* Add vertical scrolling if the content exceeds height */
 }
 
 .results-display h3 {
     margin-top: 0;
+    font-size: 1.2rem;
+    /* Adjust font size as needed */
 }
 
 .results-display ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+    /* Remove default margin */
 }
 
 .results-display .result-item {
     display: flex;
     justify-content: space-between;
+    /* Distribute space between span and input */
     align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid #ddd;
 }
 
+.results-display .result-item span {
+    flex-grow: 1;
+    /* Take up remaining space */
+}
+
 .results-display .result-item:last-child {
     border-bottom: none;
+}
+
+.results-display .result-item input[type="checkbox"] {
+    margin-left: 0.5rem;
+    /* Add some space between span and input */
+    margin-right: 0;
+    /* Remove any additional right margin */
+    justify-self: flex-end;
+    /* Ensure it aligns to the right */
 }
 
 .results-display .select-button {
@@ -41,24 +76,15 @@
     padding: 0.5rem;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 1rem;
+    display: block;
+    /* Ensure button takes up space */
+    width: 100%;
+    /* Button fits the width of the container */
+    text-align: center;
+    /* Center text inside the button */
 }
 
 .results-display .select-button:hover {
     background-color: #0056b3;
-}
-
-.results-display .close-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.results-display .close-button:hover {
-    background-color: #cc0000;
 }
