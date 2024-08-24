@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import axios from "axios";
-import ResultsDisplay from "./components/ResultsDisplay"; // Import ResultsDisplay
+import ResultsDisplay from "./components/ResultsDisplay";
 import './App.css';
 
 const App = () => {
