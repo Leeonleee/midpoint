@@ -55,9 +55,8 @@ router.get('/suggestions', async (req, res, next) => {
 
   router.post('/suggestions', async (req, res, next) => {
     try {
-      const { locations, type, radius } = req.body;
+      const { locations, type, radius, maxResultsPerType = 5, maxTotalResults = 10 } = req.body;
   
-      // Ensure locations array contains exactly two location objects
       if (locations.length !== 2) {
         return res.status(400).json({ error: 'Please provide exactly two locations.' });
       }
@@ -69,15 +68,13 @@ router.get('/suggestions', async (req, res, next) => {
       const language = 'en-US';
       const region = 'us';
   
-      // Array to hold all places
       let allPlaces = [];
   
-      // Loop through each type in the type array
       for (const singleType of type) {
         const { data } = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
           params: {
             location: `${latMid},${lngMid}`,
-            radius: radius || 500, // Default radius if not provided
+            radius: radius || 500,
             type: singleType,
             language: language,
             region: region,
@@ -86,19 +83,22 @@ router.get('/suggestions', async (req, res, next) => {
           },
         });
   
-        // Extract and format the places for the current type
-        const places = data.results.map(place => ({
+        const places = data.results.slice(0, maxResultsPerType).map(place => ({
           displayName: place.name,
           location: place.geometry.location,
           businessStatus: place.business_status,
-          type: singleType, // Include the type in the result
+          type: singleType,
         }));
   
-        // Combine places into the allPlaces array
         allPlaces = allPlaces.concat(places);
+  
+        // Break early if we've reached the total max results
+        if (allPlaces.length >= maxTotalResults) {
+          allPlaces = allPlaces.slice(0, maxTotalResults);
+          break;
+        }
       }
   
-      // Send all places back in the response
       res.json({ places: allPlaces });
     } catch (err) {
       next(err);
