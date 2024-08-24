@@ -3,6 +3,7 @@ const cors = require('cors')
 
 
 const app = express()
+app.use(cors())
 
 app.use(express.json())
 
@@ -10,7 +11,6 @@ const router = require('./routes/places.js'); // Import the router
 
 app.use('/api', router); // Use the router with a base path
 
-app.use(cors())
 
 app.get('/', (request, response) => {
     response.send("Hello world")
