@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import axios from "axios";
-import FriendsBarComponent from "./components/FriendsBarComponent";
 import ResultsDisplay from "./components/ResultsDisplay";
 import './App.css';
 
@@ -21,35 +20,9 @@ const App = () => {
   });
 
   const [response, setResponse] = useState(null);
-  const [selectedResult, setSelectedResult] = useState(null);
+  const [selectedResult, setSelectedResult] = useState(null); // Add state for selected result
   const mapRef = useRef(null);
-  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 });
-
-  const [inputValues, setInputValues] = useState(["", ""]);
-
-  const friends = [
-    { name: "Alice", location: "1600 Amphitheatre Parkway, Mountain View, CA" },
-    { name: "Bob", location: "1 Infinite Loop, Cupertino, CA" },
-    { name: "Charlie", location: "350 5th Ave, New York, NY" },
-  ];
-
-  const handleSelectFriend = (friend) => {
-    const geocoder = new window.google.maps.Geocoder();
-
-    geocoder.geocode({ address: friend.location }, (results, status) => {
-      if (status === "OK") {
-        const { lat, lng } = results[0].geometry.location;
-        updateCoordinates(1, lat(), lng());
-        setInputValues((values) => {
-          const newValues = [...values];
-          newValues[1] = friend.location;
-          return newValues;
-        });
-      } else {
-        console.error("Geocode was not successful for the following reason: " + status);
-      }
-    });
-  };
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // Default to 0,0 initially
 
   const updateCoordinates = (index, lat, lng) => {
     const newCoordinates = { ...coordinates };
@@ -89,7 +62,7 @@ const App = () => {
     try {
       const response = await axios.post(baseUrl, coordinates);
       console.log("Response: ", response.data);
-      setResponse(response.data);
+      setResponse(response.data); // Update response state
     } catch (error) {
       console.error("Error submitting coordinates: ", error);
     }
@@ -104,6 +77,7 @@ const App = () => {
 
   const handleSelect = (result) => {
     setSelectedResult(result);
+    // You can also handle the selection further here
   };
 
   const handleCloseResults = () => {
@@ -113,16 +87,11 @@ const App = () => {
   useEffect(() => {
     if (window.google && window.google.maps) {
       initializeMap();
-    } else {
-      // Handle the case where Google Maps API is not loaded yet
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY`;
-      script.onload = () => initializeMap();
-      document.head.appendChild(script);
     }
   }, []);
 
   const initializeMap = () => {
+    // Set the default coordinates to the user's current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -135,6 +104,7 @@ const App = () => {
           });
         },
         () => {
+          // Handle the case where the user denies location access
           const defaultCenter = { lat: -33.8688, lng: 151.2093 }; // Sydney coordinates
           setMapCenter(defaultCenter);
 
@@ -145,6 +115,7 @@ const App = () => {
         }
       );
     } else {
+      // Handle the case where Geolocation is not supported
       const defaultCenter = { lat: -33.8688, lng: 151.2093 }; // Sydney coordinates
       setMapCenter(defaultCenter);
 
@@ -165,7 +136,7 @@ const App = () => {
           {response ? (
             <div id="results-display-container">
               <ResultsDisplay
-                results={response.places || []}
+                results={response.places || []} // Adjust according to your response structure
                 onSelect={handleSelect}
                 onClose={handleCloseResults}
               />
@@ -174,27 +145,9 @@ const App = () => {
             <>
               <div id="autocomplete-bars">
                 <label>My Location</label>
-                <GoogleMapsAutocomplete
-                  index={0}
-                  updateCoordinates={updateCoordinates}
-                  inputValue={inputValues[0]}
-                  setInputValue={(value) => {
-                    const newValues = [...inputValues];
-                    newValues[0] = value;
-                    setInputValues(newValues);
-                  }}
-                />
+                <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
                 <label>My Friend's Location</label>
-                <GoogleMapsAutocomplete
-                  index={1}
-                  updateCoordinates={updateCoordinates}
-                  inputValue={inputValues[1]}
-                  setInputValue={(value) => {
-                    const newValues = [...inputValues];
-                    newValues[1] = value;
-                    setInputValues(newValues);
-                  }}
-                />
+                <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
               </div>
               <div>
                 <label>
@@ -274,43 +227,70 @@ const App = () => {
                 <label>
                   <input
                     type="checkbox"
-                    value="movie_theater"
+                    value="movie_theatre"
                     onChange={handleTypeChange}
-                    checked={coordinates.type.includes("movie_theater")}
+                    checked={coordinates.type.includes("movie_theatre")}
                   />
-                  Movie Theater
+                  Movie Theatre
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="museum"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("museum")}
+                  />
+                  Museum
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="tourist_attraction"
+                    onChange={handleTypeChange}
+                    checked={coordinates.type.includes("tourist_attraction")}
+                  />
+                  Tourist Attraction
                 </label>
               </div>
               <div>
                 <label>
+                  Date:
+                  <input
+                    type="date"
+                    value={coordinates.date}
+                    onChange={handleDateChange}
+                  />
+                </label>
+                <label>
                   Start Time:
-                  <input type="time" value={coordinates.startTime} onChange={handleStartTimeChange} />
+                  <input
+                    type="time"
+                    value={coordinates.startTime}
+                    onChange={handleStartTimeChange}
+                  />
                 </label>
                 <label>
                   End Time:
-                  <input type="time" value={coordinates.endTime} onChange={handleEndTimeChange} />
-                </label>
-                <label>
-                  Date:
-                  <input type="date" value={coordinates.date} onChange={handleDateChange} />
+                  <input
+                    type="time"
+                    value={coordinates.endTime}
+                    onChange={handleEndTimeChange}
+                  />
                 </label>
               </div>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitDisabled()}
-              >
+              <pre>
+                {JSON.stringify(coordinates, null, 2)}
+              </pre>
+              <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
                 Submit
               </button>
             </>
           )}
         </div>
         <div id="map" ref={mapRef}></div>
-        <FriendsBarComponent friends={friends} onSelectFriend={handleSelectFriend} />
       </div>
     </div>
   );
 };
 
 export default App;
-

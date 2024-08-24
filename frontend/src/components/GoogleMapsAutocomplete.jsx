@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StandaloneSearchBox } from "@react-google-maps/api";
 
-const GoogleMapsAutocomplete = ({ index, updateCoordinates, inputValue, setInputValue }) => {
+const GoogleMapsAutocomplete = ({ index, updateCoordinates }) => {
   const [searchBox, setSearchBox] = useState(null);
 
   const onLoad = (ref) => {
@@ -21,28 +21,16 @@ const GoogleMapsAutocomplete = ({ index, updateCoordinates, inputValue, setInput
     if (location) {
       const lat = location.lat();
       const lng = location.lng();
+
       updateCoordinates(index, lat, lng);
     }
   };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value); // Update the input value in the parent component
-  };
-
-  useEffect(() => {
-    // Update the input value when `inputValue` changes
-    if (inputValue !== undefined) {
-      setSearchBox(searchBox);
-    }
-  }, [inputValue, searchBox]);
 
   return (
     <StandaloneSearchBox onLoad={onLoad} onPlacesChanged={onPlacesChanged}>
       <input
         type="text"
         placeholder="Search places..."
-        value={inputValue}
-        onChange={handleInputChange}
         style={{
           boxSizing: "border-box",
           border: "1px solid #ddd",
@@ -53,7 +41,7 @@ const GoogleMapsAutocomplete = ({ index, updateCoordinates, inputValue, setInput
           boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
           fontSize: "14px",
           outline: "none",
-          marginBottom: "1rem",
+          marginBottom: "1rem", // You can remove or adjust this if needed
         }}
       />
     </StandaloneSearchBox>
