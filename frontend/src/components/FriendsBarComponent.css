@@ -1,0 +1,38 @@
+#friends-bar {
+    width: 200px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #ddd;
+    height: 60vh;
+    overflow-y: auto;
+}
+
+#friends-bar h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#friends-bar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#friends-bar li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#friends-bar li:hover {
+    background-color: #e0e0e0;
+}
+
+.friend-name {
+    font-size: 14px;
+}
+
+.friend-location {
+    font-size: 12px;
+}

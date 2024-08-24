@@ -144,9 +144,9 @@ const App = () => {
           ) : (
             <>
               <div id="autocomplete-bars">
-              <label>My Location</label>
+                <label>My Location</label>
                 <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
-               <label>My Friend's Location</label>
+                <label>My Friend's Location</label>
                 <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
               </div>
               <div>
