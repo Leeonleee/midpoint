@@ -1,8 +1,10 @@
+const dotenv = require("dotenv").config();
 const axios = require('axios')
 const router = require('express').Router()
-require('dotenv').config();
+
+const key = process.env.GOOGLE_API_KEY;
 module.exports = router
-const key = 'AIzaSyB_XZ2Q20yGdz-7wWgel1EaNv9Pw6vzgeY';
+
 router.get('/restaurants', async (req, res, next) => {
  try {
    const neighborhood = 'chelsea'
@@ -52,6 +54,7 @@ router.get('/suggestions', async (req, res, next) => {
 
 
   router.post('/suggestions', async (req, res, next) => {
+    console.log('API', key)
     try {
       // Destructure the parameters from the request body
       const locations = req.body.locations;
