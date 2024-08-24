@@ -76,8 +76,9 @@ const App = () => {
 
   return (
     <div>
-      <h1>Midpoint</h1>
-      <h2>where friends meet in between</h2>
+      <div className="header">
+        <img src="src/assets/header.png" alt="Midpoint Header" /> {/* Replace with your image path */}
+      </div>
       <div id="container">
         <div id="sidebar">
           {/* Moved Search Bars */}
