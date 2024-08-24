@@ -77,13 +77,13 @@ const App = () => {
   return (
     <div>
       <h1>Midpoint</h1>
-      <h2>Where friends meet in between</h2>
+      <h2>where friends meet in between</h2>
       <div id="container">
-        <div id="map">
+        <div id="sidebar">
+          {/* Moved Search Bars */}
           <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
           <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
-        </div>
-        <div id="sidebar">
+          
           {/* Dropdown menu for selecting radius */}
           <div>
             <label>
@@ -227,6 +227,9 @@ const App = () => {
           <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
             Submit
           </button>
+        </div>
+        <div id="map">
+          {/* Map should remain in the map container */}
         </div>
       </div>
     </div>

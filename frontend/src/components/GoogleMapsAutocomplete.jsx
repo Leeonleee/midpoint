@@ -46,7 +46,7 @@ const GoogleMapsAutocomplete = ({ index, updateCoordinates }) => {
             boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
             fontSize: "14px",
             outline: "none",
-            marginBottom: "1rem",
+            marginBottom: "1rem", // You can remove or adjust this if needed
           }}
         />
       </StandaloneSearchBox>
