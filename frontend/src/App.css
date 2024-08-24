@@ -1,13 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('src/assets/midpoint background.png');
-    /* Replace with your image path */
-    background-size: cover;
-    /* Makes the image cover the entire viewport */
-    background-position: center;
-    /* Centers the image */
-    background-repeat: no-repeat;
-    /* Prevents repeating the image */
+    background-image: url('src/assets/midpoint background (Desktop Wallpaper).png'); /* Replace with your image path */
+    background-size: cover; /* Makes the image cover the entire viewport */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating the image */
     color: #333;
     margin: 0;
     padding: 0;
@@ -19,16 +15,13 @@ body {
 
 .header {
     text-align: center;
-    margin-bottom: 2rem;
-    /* Space between header and container */
-    margin-top: 5rem;
+    margin-bottom: 0.01rem; /* Space between header and container */
+    margin-top: 0.01rem;
 }
 
 .header img {
-    width: 400px;
-    /* Set width to a smaller value, adjust as needed */
-    height: auto;
-    /* Maintain aspect ratio */
+    width: 500px; /* Set width to a smaller value, adjust as needed */
+    height: auto; /* Maintain aspect ratio */
 }
 
 #container {
@@ -41,14 +34,10 @@ body {
     /* Adjust height as needed */
     padding: 1rem;
     box-sizing: border-box;
-    gap: 1rem;
-    /* Space between map and sidebar */
-    border-radius: 10px;
-    /* Rounded corners for container */
-    background-color: #f3e6f9;
-    /* Lighter shade of purple for the container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
+    gap: 1rem; /* Space between map and sidebar */
+    border-radius: 10px; /* Rounded corners for container */
+    background-color: #f3e6f9; /* Lighter shade of purple for the container */
+    box-shadow: 0 4px 8px rgba(133, 23, 137, 0.383);
 }
 
 #map {
@@ -56,10 +45,9 @@ body {
     height: 100%;
     width: 100%;
     border-radius: 10px;
-    background-color: #f3e6f9;
-    /* Lighter shade of purple for the map */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ddd;
+    background-color: #f3e6f9; /* Lighter shade of purple for the map */
+    box-shadow: 0 4px 8px rgba(133, 23, 137, 0.383);
+    border: 2px solid #f3e6f9;
 }
 
 #sidebar {
@@ -70,12 +58,10 @@ body {
     background-color: #f3e6f9;
     /* Lighter shade of purple for the sidebar */
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ddd;
-    max-height: 100%;
-    /* Ensure sidebar doesn’t overflow */
-    overflow-y: auto;
-    /* Scroll if content exceeds height */
+    box-shadow: 0 4px 8px rgba(133, 23, 137, 0.383);
+    border: 2px solid #f3e6f9;
+    max-height: 100%; /* Ensure sidebar doesn’t overflow */
+    overflow-y: auto; /* Scroll if content exceeds height */
 }
 
 label {
@@ -93,18 +79,15 @@ select {
     width: 100%;
     /* Full width for inputs */
     padding: 0.5rem;
-    border: 1px solid #ccc;
-    /* Light border for inputs */
+    border: 1px solid #f3e6f9; /* Light border for inputs */
     border-radius: 5px;
     margin-bottom: 1rem;
     /* Space between inputs */
 }
 
 button {
-    background-color: #007bff;
-    /* Button background color */
-    color: #fff;
-    /* Button text color */
+    background-color: #007bff; /* Button background color */
+    color: #f3e6f9; /* Button text color */
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 5px;
@@ -120,14 +103,10 @@ button:hover {
 }
 
 button:disabled {
-    background-color: #cccccc;
-    /* Grey background for disabled state */
-    color: #666666;
-    /* Grey text color for disabled state */
-    cursor: not-allowed;
-    /* Change cursor to indicate disabled state */
-    opacity: 0.6;
-    /* Make button slightly transparent */
+    background-color: #f3e6f9; /* Grey background for disabled state */
+    color: #666666; /* Grey text color for disabled state */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+    opacity: 0.6; /* Make button slightly transparent */
 }
 
 pre {

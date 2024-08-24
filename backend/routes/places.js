@@ -3,6 +3,9 @@ const axios = require('axios')
 const router = require('express').Router()
 
 const key = process.env.GOOGLE_API_KEY;
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 module.exports = router
 
 router.get('/restaurants', async (req, res, next) => {
@@ -55,7 +58,7 @@ router.get('/suggestions', async (req, res, next) => {
 
   router.post('/suggestions', async (req, res, next) => {
     try {
-      const { locations, type, radius, maxResultsPerType = 5, maxTotalResults = 10 } = req.body;
+      const { locations, type, radius, maxResultsPerType = 5 } = req.body;
   
       if (locations.length !== 2) {
         return res.status(400).json({ error: 'Please provide exactly two locations.' });
@@ -91,12 +94,6 @@ router.get('/suggestions', async (req, res, next) => {
         }));
   
         allPlaces = allPlaces.concat(places);
-  
-        // Break early if we've reached the total max results
-        if (allPlaces.length >= maxTotalResults) {
-          allPlaces = allPlaces.slice(0, maxTotalResults);
-          break;
-        }
       }
   
       res.json({ places: allPlaces });
@@ -105,3 +102,22 @@ router.get('/suggestions', async (req, res, next) => {
     }
   });
   
+  
+
+router.get('/gemini', async (req,res)=>{
+    try{
+        const prompt = "Create 5 funny and witty jokes about generative AI";
+
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+        res.send(text);
+    }
+    catch(err){
+        console.log(err);
+        res.send("Unexpected Error!!!");
+    }
+}
+)
+
+

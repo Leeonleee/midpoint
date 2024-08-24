@@ -27,7 +27,7 @@ const GoogleMapsAutocomplete = ({ index, updateCoordinates }) => {
       updateCoordinates(index, lat, lng);
     }
 
-    setPlaces(places);
+    // setPlaces(places);
   };
 
   return (
