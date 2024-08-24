@@ -109,24 +109,24 @@ const getPlaceDetails = async (placeId) => {
           type: singleType,
         }));
 
-        // Fetch details for each place
-      const placesWithDetails = await Promise.all(
-        data.results.slice(0, maxResultsPerType).map(async (place) => {
-          const placeDetails = await getPlaceDetails(place.place_id);
-          return {
-            displayName: place.name,
-            location: place.geometry.location,
-            businessStatus: place.business_status,
-            type: singleType,
-            placeId: place.place_id,
-            placeDetails: placeDetails, // Include detailed place info
-          };
-        })
-      );
+    //     // Fetch details for each place
+    //   const placesWithDetails = await Promise.all(
+    //     data.results.slice(0, maxResultsPerType).map(async (place) => {
+    //       const placeDetails = await getPlaceDetails(place.place_id);
+    //       return {
+    //         displayName: place.name,
+    //         location: place.geometry.location,
+    //         businessStatus: place.business_status,
+    //         type: singleType,
+    //         placeId: place.place_id,
+    //         placeDetails: placeDetails, // Include detailed place info
+    //       };
+    //     })
+    //   );
   
-        allPlaces = allPlaces.concat(placesWithDetails);
+        allPlaces = allPlaces.concat(places);
       }
-  
+
       res.json({ places: allPlaces });
     } catch (err) {
       next(err);
@@ -135,7 +135,8 @@ const getPlaceDetails = async (placeId) => {
   
   
 
-router.get('/gemini', async (req,res)=>{
+router.post('/gemini', async (req,res)=>{
+    console.log(req.body)
     try{
         const prompt = "Create 5 funny and witty jokes about generative AI";
 
