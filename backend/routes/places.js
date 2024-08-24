@@ -148,20 +148,22 @@ router.post('/gemini', async (req,res)=>{
         const request = req.body
 
         const prompt = `I have a current json file with places in the format here:
-        ${request}
+        ${JSON.stringify(request, null, 2)}
 
 Create an itinerary that is in between the start and end times given based on the following format.  The path between the locations should be efficient and in a logical manner. Start time is ${startTime} and end time is ${endTime}. Only return the proposed json itinerary. Thanks :)
 
 ${example_itinerary}`;
 
-
+        console.log(prompt)
+        console.log('\n\n')
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
+        console.log(text)
         const jsonString = text.match(/{[^]*}/)[0];
         const jsonObject = JSON.parse(jsonString);
 
-        // console.log(jsonObject);
+        console.log(jsonObject);
         res.json(jsonObject);
     }
     catch(err){
