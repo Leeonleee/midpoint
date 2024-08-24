@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './ResultsDisplay.css'; // Ensure you have a CSS file for styling
+import axios from 'axios';
+import './ResultsDisplay.css';
 
 const ResultsDisplay = ({ results, onSelect }) => {
     const [checkedPlaces, setCheckedPlaces] = useState([]);
@@ -12,17 +13,32 @@ const ResultsDisplay = ({ results, onSelect }) => {
                 return prevCheckedPlaces.filter(p => p !== place);
             } else {
                 // Otherwise, add to list
-                console.log(place.businessStatus);
                 return [...prevCheckedPlaces, place];
             }
         });
     };
 
-    const handleSubmitSelection = () => {
-        if (onSelect) {
-            onSelect(checkedPlaces);
+    const handleSubmitSelection = async () => {
+        // Prepare data to send in the POST request
+        const dataToSend = checkedPlaces.map(place => ({
+            displayName: place.displayName,
+            location: place.location,
+            businessStatus: place.businessStatus,
+            type: place.type.charAt(0).toUpperCase() + place.type.slice(1),
+        }));
+
+        try {
+            const response = await axios.post('http://localhost:3001/api/gemini', dataToSend);
+            console.log('Response:', response.data);
+
+            if (onSelect) {
+                onSelect(checkedPlaces);
+            }
+        } catch (error) {
+            console.error('Error sending data:', error);
         }
-        console.log(checkedPlaces)
+
+        console.log(checkedPlaces);
     };
 
     return (
@@ -35,6 +51,7 @@ const ResultsDisplay = ({ results, onSelect }) => {
                     {results.map((place, index) => (
                         <li key={index} className="result-item">
                             <span>{place.displayName}</span>
+                            <span>{place.type.charAt(0).toUpperCase() + place.type.slice(1)}</span>
                             <input
                                 type="checkbox"
                                 checked={checkedPlaces.includes(place)}

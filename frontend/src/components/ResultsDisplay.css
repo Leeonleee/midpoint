@@ -1,59 +1,40 @@
-/* ResultsDisplay.css */
-/* .results-display {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: calc(100% - 1rem);
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    z-index: 100;
-    box-sizing: border-box;
-    overflow-y: auto;
-} */
 .results-display {
     width: 100%;
-    /* Make sure it uses the full width of the sidebar */
     max-height: calc(100vh - 2rem);
-    /* Adjust to fit within the sidebar height */
     background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     box-sizing: border-box;
-    /* Include padding in the width/height calculation */
     overflow-y: auto;
-    /* Add vertical scrolling if the content exceeds height */
 }
 
 .results-display h3 {
     margin-top: 0;
     font-size: 1.2rem;
-    /* Adjust font size as needed */
 }
 
 .results-display ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    /* Remove default margin */
 }
 
 .results-display .result-item {
     display: flex;
-    justify-content: space-between;
-    /* Distribute space between span and input */
-    align-items: center;
+    flex-direction: column;
+    /* Stack name and type vertically */
+    align-items: flex-start;
     padding: 0.5rem 0;
     border-bottom: 1px solid #ddd;
 }
 
-.results-display .result-item span {
-    flex-grow: 1;
-    /* Take up remaining space */
+.results-display .result-item span:first-child {
+    font-weight: bold;
+    /* Make the restaurant name bold */
+    margin-bottom: 0.25rem;
+    /* Add space between the name and type */
 }
 
 .results-display .result-item:last-child {
@@ -61,12 +42,10 @@
 }
 
 .results-display .result-item input[type="checkbox"] {
-    margin-left: 0.5rem;
-    /* Add some space between span and input */
-    margin-right: 0;
-    /* Remove any additional right margin */
-    justify-self: flex-end;
-    /* Ensure it aligns to the right */
+    align-self: flex-end;
+    /* Align the checkbox to the right */
+    margin-top: 0.5rem;
+    /* Add space above the checkbox */
 }
 
 .results-display .select-button {
@@ -78,11 +57,8 @@
     cursor: pointer;
     margin-top: 1rem;
     display: block;
-    /* Ensure button takes up space */
     width: 100%;
-    /* Button fits the width of the container */
     text-align: center;
-    /* Center text inside the button */
 }
 
 .results-display .select-button:hover {
