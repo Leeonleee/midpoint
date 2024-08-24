@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import axios from "axios";
-import './App.css'; // Import your CSS file
+import ResultsDisplay from "./components/ResultsDisplay"; // Import ResultsDisplay
+import './App.css';
 
 const App = () => {
   const baseUrl = 'http://localhost:3001/api/suggestions';
@@ -18,28 +19,28 @@ const App = () => {
     "date": "",
   });
 
-  // Function to update coordinates
+  const [response, setResponse] = useState(null);
+  const [selectedResult, setSelectedResult] = useState(null); // Add state for selected result
+  const mapRef = useRef(null);
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // Default to 0,0 initially
+
   const updateCoordinates = (index, lat, lng) => {
     const newCoordinates = { ...coordinates };
     newCoordinates.locations[index] = { lat, lng };
     setCoordinates(newCoordinates);
   };
 
-  // Function to handle checkbox changes
   const handleTypeChange = (e) => {
     const { value, checked } = e.target;
-
     let updatedTypes;
     if (checked) {
       updatedTypes = [...coordinates.type, value];
     } else {
       updatedTypes = coordinates.type.filter((type) => type !== value);
     }
-
     setCoordinates({ ...coordinates, type: updatedTypes });
   };
 
-  // Function to update radius from dropdown
   const updateRadius = (e) => {
     const radius = parseInt(e.target.value, 10);
     setCoordinates({ ...coordinates, radius });
@@ -61,12 +62,12 @@ const App = () => {
     try {
       const response = await axios.post(baseUrl, coordinates);
       console.log("Response: ", response.data);
+      setResponse(response.data); // Update response state
     } catch (error) {
       console.error("Error submitting coordinates: ", error);
     }
   };
 
-  // Check if all fields are filled
   const isSubmitDisabled = () => {
     const { locations, type, radius, startTime, endTime, date } = coordinates;
     const allLocationsFilled = locations.every(coord => coord.lat && coord.lng);
@@ -74,18 +75,67 @@ const App = () => {
     return !(allLocationsFilled && allFieldsFilled);
   };
 
+  const handleSelect = (result) => {
+    setSelectedResult(result);
+    // You can also handle the selection further here
+  };
+
+  const handleCloseResults = () => {
+    setResponse(null);
+  };
+
+  useEffect(() => {
+    if (window.google && window.google.maps) {
+      initializeMap();
+    }
+  }, []);
+
+  const initializeMap = () => {
+    // Set the default coordinates to the user's current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setMapCenter({ lat: latitude, lng: longitude });
+
+          new window.google.maps.Map(mapRef.current, {
+            center: { lat: latitude, lng: longitude },
+            zoom: 12,
+          });
+        },
+        () => {
+          // Handle the case where the user denies location access
+          const defaultCenter = { lat: -33.8688, lng: 151.2093 }; // Sydney coordinates
+          setMapCenter(defaultCenter);
+
+          new window.google.maps.Map(mapRef.current, {
+            center: defaultCenter,
+            zoom: 12,
+          });
+        }
+      );
+    } else {
+      // Handle the case where Geolocation is not supported
+      const defaultCenter = { lat: -33.8688, lng: 151.2093 }; // Sydney coordinates
+      setMapCenter(defaultCenter);
+
+      new window.google.maps.Map(mapRef.current, {
+        center: defaultCenter,
+        zoom: 12,
+      });
+    }
+  };
+
   return (
     <div>
-      <div className="header">
-        <img src="src/assets/header.png" alt="Midpoint Header" /> {/* Replace with your image path */}
-      </div>
+      <h1>Midpoint</h1>
+      <h2>Where friends meet in between</h2>
       <div id="container">
         <div id="sidebar">
-          {/* Moved Search Bars */}
-          <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
-          <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
-          
-          {/* Dropdown menu for selecting radius */}
+          <div id="autocomplete-bars">
+            <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
+            <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
+          </div>
           <div>
             <label>
               Radius (m):
@@ -97,8 +147,6 @@ const App = () => {
               </select>
             </label>
           </div>
-
-          {/* Checkbox menu for selecting types */}
           <div>
             <label>
               <input
@@ -191,8 +239,6 @@ const App = () => {
               Tourist Attraction
             </label>
           </div>
-
-          {/* Inputs for date and time */}
           <div>
             <label>
               Date:
@@ -219,20 +265,22 @@ const App = () => {
               />
             </label>
           </div>
-
-          {/* Display coordinates */}
           <pre>
             {JSON.stringify(coordinates, null, 2)}
           </pre>
-
           <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
             Submit
           </button>
         </div>
-        <div id="map">
-          {/* Map should remain in the map container */}
-        </div>
+        <div id="map" ref={mapRef}></div>
       </div>
+      {response && (
+        <ResultsDisplay
+          results={response.places || []} // Adjust according to your response structure
+          onSelect={handleSelect}
+          onClose={handleCloseResults}
+        />
+      )}
     </div>
   );
 };
