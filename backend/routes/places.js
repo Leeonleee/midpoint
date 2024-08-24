@@ -54,42 +54,54 @@ router.get('/suggestions', async (req, res, next) => {
 
 
   router.post('/suggestions', async (req, res, next) => {
-    console.log('API', key)
     try {
-      // Destructure the parameters from the request body
-      const locations = req.body.locations;
+      const { locations, type, radius } = req.body;
+  
+      // Ensure locations array contains exactly two location objects
+      if (locations.length !== 2) {
+        return res.status(400).json({ error: 'Please provide exactly two locations.' });
+      }
+  
       const [location1, location2] = locations;
-    const latMid = (location1.lat + location2.lat) / 2;
-    const lngMid = (location1.lng + location2.lng) / 2;
-
-
-      const radius = 5000;
-      const type = 'natural_feature';
-      const maxResults = 5;
+      const latMid = (location1.lat + location2.lat) / 2;
+      const lngMid = (location1.lng + location2.lng) / 2;
+  
       const language = 'en-US';
       const region = 'us';
   
-      const { data } = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
-        params: {
-          location: `${latMid},${lngMid}`,
-          radius: radius,
-          type: type,
-          language: language,
-          region: region,
-          key: key,
-          rankby: 'prominence', // To mimic rankPreference: SearchNearbyRankPreference.POPULARITY
-        },
-      });
+      // Array to hold all places
+      let allPlaces = [];
   
-      const places = data.results.slice(0, maxResults).map(place => ({
-        displayName: place.name,
-        location: place.geometry.location,
-        businessStatus: place.business_status,
-      }));
-      
-      console.log(places)
-      res.json(places);
+      // Loop through each type in the type array
+      for (const singleType of type) {
+        const { data } = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+          params: {
+            location: `${latMid},${lngMid}`,
+            radius: radius || 500, // Default radius if not provided
+            type: singleType,
+            language: language,
+            region: region,
+            key: process.env.GOOGLE_API_KEY,
+            rankby: 'prominence',
+          },
+        });
+  
+        // Extract and format the places for the current type
+        const places = data.results.map(place => ({
+          displayName: place.name,
+          location: place.geometry.location,
+          businessStatus: place.business_status,
+          type: singleType, // Include the type in the result
+        }));
+  
+        // Combine places into the allPlaces array
+        allPlaces = allPlaces.concat(places);
+      }
+  
+      // Send all places back in the response
+      res.json({ places: allPlaces });
     } catch (err) {
       next(err);
     }
   });
+  
