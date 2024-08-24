@@ -1,12 +1,17 @@
 const dotenv = require("dotenv").config();
 const axios = require('axios')
 const router = require('express').Router()
+const example_itinerary = require('../example_itinerary.js')
+
 
 const key = process.env.GOOGLE_API_KEY;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 module.exports = router
+
+let startTime
+let endTime
 
 router.get('/restaurants', async (req, res, next) => {
  try {
@@ -75,6 +80,8 @@ const getPlaceDetails = async (placeId) => {
   router.post('/suggestions', async (req, res, next) => {
     try {
       const { locations, type, radius, maxResultsPerType = 5 } = req.body;
+      startTime = req.body.startTime
+      endTime = req.body.endTime
   
       if (locations.length !== 2) {
         return res.status(400).json({ error: 'Please provide exactly two locations.' });
@@ -136,14 +143,26 @@ const getPlaceDetails = async (placeId) => {
   
 
 router.post('/gemini', async (req,res)=>{
-    console.log(req.body)
+
     try{
-        const prompt = "Create 5 funny and witty jokes about generative AI";
+        const request = req.body
+
+        const prompt = `I have a current json file with places in the format here:
+        ${request}
+
+Create an itinerary that is in between the start and end times given based on the following format.  The path between the locations should be efficient and in a logical manner. Start time is ${startTime} and end time is ${endTime}. Only return the proposed json itinerary. Thanks :)
+
+${example_itinerary}`;
+
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
-        res.send(text);
+        const jsonString = text.match(/{[^]*}/)[0];
+        const jsonObject = JSON.parse(jsonString);
+
+        // console.log(jsonObject);
+        res.json(jsonObject);
     }
     catch(err){
         console.log(err);
