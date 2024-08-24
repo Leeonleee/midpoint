@@ -1,0 +1,64 @@
+/* ResultsDisplay.css */
+.results-display {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    width: 300px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    z-index: 1000;
+    /* Ensure it’s on top of other content */
+}
+
+.results-display h3 {
+    margin-top: 0;
+}
+
+.results-display ul {
+    list-style: none;
+    padding: 0;
+}
+
+.results-display .result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.results-display .result-item:last-child {
+    border-bottom: none;
+}
+
+.results-display .select-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.results-display .select-button:hover {
+    background-color: #0056b3;
+}
+
+.results-display .close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.results-display .close-button:hover {
+    background-color: #cc0000;
+}

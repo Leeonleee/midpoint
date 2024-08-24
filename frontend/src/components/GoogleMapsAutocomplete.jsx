@@ -31,7 +31,7 @@ const GoogleMapsAutocomplete = ({ index, updateCoordinates }) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyAm5kT1IDGddzTnpecUx06IryFaR7-cEOo" libraries={libraries}>
+    <LoadScript googleMapsApiKey="AIzaSyAHvu6Ki5GximpsgzswWG_zXurNTfLgx9o" libraries={libraries}>
       <StandaloneSearchBox onLoad={onLoad} onPlacesChanged={onPlacesChanged}>
         <input
           type="text"
