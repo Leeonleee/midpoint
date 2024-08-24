@@ -55,6 +55,22 @@ router.get('/suggestions', async (req, res, next) => {
     }
   });
 
+// Helper function to get place details
+const getPlaceDetails = async (placeId) => {
+    try {
+      const { data } = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
+        params: {
+          place_id: placeId,
+          key: process.env.GOOGLE_API_KEY,
+        },
+      });
+      return data.result; // Return detailed place information
+    } catch (error) {
+      console.error(`Failed to fetch details for place_id ${placeId}:`, error);
+      return null;
+    }
+  };
+
 
   router.post('/suggestions', async (req, res, next) => {
     try {
@@ -92,8 +108,23 @@ router.get('/suggestions', async (req, res, next) => {
           businessStatus: place.business_status,
           type: singleType,
         }));
+
+        // Fetch details for each place
+      const placesWithDetails = await Promise.all(
+        data.results.slice(0, maxResultsPerType).map(async (place) => {
+          const placeDetails = await getPlaceDetails(place.place_id);
+          return {
+            displayName: place.name,
+            location: place.geometry.location,
+            businessStatus: place.business_status,
+            type: singleType,
+            placeId: place.place_id,
+            placeDetails: placeDetails, // Include detailed place info
+          };
+        })
+      );
   
-        allPlaces = allPlaces.concat(places);
+        allPlaces = allPlaces.concat(placesWithDetails);
       }
   
       res.json({ places: allPlaces });
