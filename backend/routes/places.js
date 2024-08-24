@@ -150,9 +150,9 @@ router.post('/gemini', async (req,res)=>{
         const prompt = `I have a current json file with places in the format here:
         ${JSON.stringify(request, null, 2)}
 
-Create an itinerary that is in between the start and end times given based on the following format.  The path between the locations should be efficient and in a logical manner. Start time is ${startTime} and end time is ${endTime}. Only return the proposed json itinerary. Thanks :)
+        Create an itinerary that is in between the start and end times given based on the following format.  The path between the locations should be efficient and in a logical manner. Do not repeat places in the itinerary. Start time is ${startTime} and end time is ${endTime}. Only return the proposed json itinerary. Thanks :)
 
-${example_itinerary}`;
+        ${example_itinerary}`;
 
         console.log(prompt)
         console.log('\n\n')
