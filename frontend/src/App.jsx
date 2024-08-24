@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css'; // Import your CSS file
 import GoogleMapComponent from "./GoogleMapComponent";
+import axios from 'axios';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
       const map = new google.maps.Map(mapRef.current, {
         center: { lat: 55.53, lng: 9.4 },
         zoom: 10,
-        // mapId:
+        mapId: '71c30832fd3117e4'
       });
 
       const geocoder = new google.maps.Geocoder();
@@ -42,6 +43,23 @@ function App() {
         if (responseRef.current) {
           responseRef.current.innerText = JSON.stringify(response, null, 2);
         }
+
+
+        const string1 = "Example String 1";
+        const string2 = "Example String 2";
+
+
+        const dataToSend = {
+          string1,
+          string2
+        };
+        axios.post('https://localhost:3001/api/suggestions', dataToSend)
+          .then(response => {
+            console.log('Success:', response.data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
 
         const originList = response.originAddresses;
         const destinationList = response.destinationAddresses;
@@ -95,6 +113,7 @@ function App() {
     <div id="container">
       <h1>My Google Map</h1>
       <GoogleMapComponent />
+
       <div id="map" ref={mapRef}></div>
       <div id="sidebar">
         <h3>Request</h3>
