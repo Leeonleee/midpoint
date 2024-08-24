@@ -5,6 +5,11 @@ const app = express()
 
 app.use(express.json())
 
+const router = require('./routes/places.js'); // Import the router
+
+app.use('/api', router); // Use the router with a base path
+
+
 app.get('/', (request, response) => {
     response.send("Hello world")
 })
