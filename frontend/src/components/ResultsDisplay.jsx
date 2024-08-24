@@ -12,6 +12,7 @@ const ResultsDisplay = ({ results, onSelect }) => {
                 return prevCheckedPlaces.filter(p => p !== place);
             } else {
                 // Otherwise, add to list
+                console.log(place.businessStatus);
                 return [...prevCheckedPlaces, place];
             }
         });
@@ -21,6 +22,7 @@ const ResultsDisplay = ({ results, onSelect }) => {
         if (onSelect) {
             onSelect(checkedPlaces);
         }
+        console.log(checkedPlaces)
     };
 
     return (
