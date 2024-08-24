@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css'; // Import your CSS file
+import GoogleMapComponent from "./GoogleMapComponent";
+
 
 function App() {
   const mapRef = useRef(null);
@@ -91,6 +93,8 @@ function App() {
 
   return (
     <div id="container">
+      <h1>My Google Map</h1>
+      <GoogleMapComponent />
       <div id="map" ref={mapRef}></div>
       <div id="sidebar">
         <h3>Request</h3>
