@@ -151,7 +151,7 @@ const App = () => {
               </div>
               <div>
                 <label>
-                  Radius (m):
+                  Radius (m)
                   <select value={coordinates.radius} onChange={updateRadius}>
                     <option value={500}>500</option>
                     <option value={1000}>1000</option>
@@ -254,7 +254,7 @@ const App = () => {
               </div>
               <div>
                 <label>
-                  Date:
+                  Date
                   <input
                     type="date"
                     value={coordinates.date}
@@ -262,7 +262,7 @@ const App = () => {
                   />
                 </label>
                 <label>
-                  Start Time:
+                  Start Time
                   <input
                     type="time"
                     value={coordinates.startTime}
@@ -270,7 +270,7 @@ const App = () => {
                   />
                 </label>
                 <label>
-                  End Time:
+                  End Time
                   <input
                     type="time"
                     value={coordinates.endTime}
