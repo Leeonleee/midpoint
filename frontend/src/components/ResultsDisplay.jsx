@@ -43,7 +43,7 @@ const ResultsDisplay = ({ results, onSelect }) => {
 
     return (
         <div className="results-display">
-            <h3>Select Places</h3>
+            <h3>Select Itinerary Locations</h3>
             {results.length === 0 ? (
                 <p>No results found.</p>
             ) : (
@@ -62,7 +62,7 @@ const ResultsDisplay = ({ results, onSelect }) => {
                 </ul>
             )}
             <button className="select-button" onClick={handleSubmitSelection}>
-                Submit Selection
+                Create Itinerary
             </button>
         </div>
     );
