@@ -79,7 +79,7 @@ const getPlaceDetails = async (placeId) => {
 
   router.post('/suggestions', async (req, res, next) => {
     try {
-      const { locations, type, radius, maxResultsPerType = 5 } = req.body;
+      const { locations, type, radius, maxResultsPerType = 3 } = req.body;
       startTime = req.body.startTime
       endTime = req.body.endTime
   
