@@ -20,7 +20,7 @@ const GoogleMapComponent = () => {
     async function nearbySearch(map) {
       const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary("places");
       const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-      
+
       const center = new google.maps.LatLng(52.369358, 4.889258);
       const request = {
         fields: ["displayName", "location", "businessStatus"],
