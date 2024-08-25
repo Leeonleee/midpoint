@@ -25,17 +25,30 @@ const App = () => {
   const [response, setResponse] = useState(null);
   const mapRef = useRef(null);
   const [mapInstance, setMapInstance] = useState(null);
-  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // Default to 0,0 initially
 
+  const friends = [
+    { name: "Kaithlyn", location: "Abercrombie Building (H70), Darlington NSW, Australia" },
+    { name: "Bob", location: "1 Infinite Loop, Cupertino, CA" },
+    { name: "Charlie", location: "350 5th Ave, New York, NY" },
+  ];
+
+  const handleSelectFriend = (friend) => {
+    const geocoder = new window.google.maps.Geocoder();
+
+    geocoder.geocode({ address: friend.location }, (results, status) => {
+      if (status === "OK") {
+        const { lat, lng } = results[0].geometry.location;
+        updateCoordinates(1, lat(), lng()); // Update the second location (index 1) with friend's coordinates
+      } else {
+        console.error("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  };
   const updateCoordinates = (index, lat, lng) => {
     const newCoordinates = { ...coordinates };
     newCoordinates.locations[index] = { lat, lng };
     setCoordinates(newCoordinates);
   };
-
-  // const handleSelectTwo = (selectedPlaces) => {
-  //   setSelectedResults2(selectedPlaces); // Update state with selected results
-  // };
 
   const handleTypeChange = (e) => {
     const { value, checked } = e.target;
@@ -69,7 +82,7 @@ const App = () => {
     try {
       const response = await axios.post(baseUrl, coordinates);
       console.log("Response: ", response.data);
-      setResponse(response.data); // Update response state
+      setResponse(response.data);
     } catch (error) {
       console.error("Error submitting coordinates: ", error);
     }
@@ -86,7 +99,6 @@ const App = () => {
   const handleSelect = (ticked, result) => {
     setMarkerData(ticked);
     setSelectedResults(result);
-    // You can also handle the selection further here
   };
 
   const handleCloseResults = () => {
@@ -99,14 +111,6 @@ const App = () => {
       console.log(selectedResults.length)
       return (
         <ItineraryComponent selectedResults={selectedResults} />
-        // <div>
-        //   <h3>Selected Itinerary</h3>
-        //   <ul>
-        //     {selectedResults2.map((result, index) => (
-        //       <li key={index}>{result.displayName}</li>
-        //     ))}
-        //   </ul>
-        // </div>
       );
     } else if (response) {
       console.log("RESPONSE")
@@ -330,162 +334,10 @@ const App = () => {
       </div>
       <div id="container">
         <div id="sidebar">
-          {/* {response ? (
-            <div id="results-display-container">
-              <ResultsDisplay
-                results={response.places || []}
-                onSelect={handleSelect}
-                onClose={handleCloseResults}
-              />
-            </div>
-          ) : (
-            <>
-              <div id="autocomplete-bars">
-                <label>My Location</label>
-                <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
-                <label>My Friend's Location</label>
-                <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
-              </div>
-              <div>
-                <label>
-                  Radius (m)
-                  <select value={coordinates.radius} onChange={updateRadius}>
-                    <option value={500}>500</option>
-                    <option value={1000}>1000</option>
-                    <option value={2000}>2000</option>
-                    <option value={5000}>5000</option>
-                  </select>
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="restaurant"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("restaurant")}
-                  />
-                  Restaurant
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="amusement_park"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("amusement_park")}
-                  />
-                  Amusement Park
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="art_gallery"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("art_gallery")}
-                  />
-                  Art Gallery
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="cafe"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("cafe")}
-                  />
-                  Cafe
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="gym"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("gym")}
-                  />
-                  Gym
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="bar"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("bar")}
-                  />
-                  Bar
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="library"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("library")}
-                  />
-                  Library
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="movie_theatre"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("movie_theatre")}
-                  />
-                  Movie Theatre
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="museum"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("museum")}
-                  />
-                  Museum
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="tourist_attraction"
-                    onChange={handleTypeChange}
-                    checked={coordinates.type.includes("tourist_attraction")}
-                  />
-                  Tourist Attraction
-                </label>
-              </div>
-              <div>
-                <label>
-                  Date
-                  <input
-                    type="date"
-                    value={coordinates.date}
-                    onChange={handleDateChange}
-                  />
-                </label>
-                <label>
-                  Start Time
-                  <input
-                    type="time"
-                    value={coordinates.startTime}
-                    onChange={handleStartTimeChange}
-                  />
-                </label>
-                <label>
-                  End Time
-                  <input
-                    type="time"
-                    value={coordinates.endTime}
-                    onChange={handleEndTimeChange}
-                  />
-                </label>
-              </div>
-              <pre>
-                {JSON.stringify(coordinates, null, 2)}
-              </pre>
-              <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
-                Submit
-              </button>
-            </>
-          )}*/}
           {renderSidebarContent()}
         </div>
         <div id="map" ref={mapRef}></div>
+        <FriendsBarComponent friends={friends} onSelectFriend={handleSelectFriend} />
       </div>
     </div>
   );
