@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import axios from "axios";
+import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import ResultsDisplay from "./components/ResultsDisplay";
 import ItineraryComponent from "./components/ItineraryComponent";
 import FriendsBarComponent from "./components/FriendsBarComponent";
@@ -25,6 +25,7 @@ const App = () => {
   const [response, setResponse] = useState(null);
   const mapRef = useRef(null);
   const [mapInstance, setMapInstance] = useState(null);
+  const [friendLocation, setFriendLocation] = useState("");
 
   const friends = [
     { name: "Kaithlyn", location: "Abercrombie Building (H70), Darlington NSW, Australia" },
@@ -39,15 +40,22 @@ const App = () => {
       if (status === "OK") {
         const { lat, lng } = results[0].geometry.location;
         updateCoordinates(1, lat(), lng()); // Update the second location (index 1) with friend's coordinates
+        setFriendLocation(results[0].formatted_address); // Set friend location to input
       } else {
         console.error("Geocode was not successful for the following reason: " + status);
       }
     });
   };
+
   const updateCoordinates = (index, lat, lng) => {
     const newCoordinates = { ...coordinates };
     newCoordinates.locations[index] = { lat, lng };
     setCoordinates(newCoordinates);
+  };
+
+  const updateRadius = (e) => {
+    const radius = parseInt(e.target.value, 10);
+    setCoordinates({ ...coordinates, radius });
   };
 
   const handleTypeChange = (e) => {
@@ -59,11 +67,6 @@ const App = () => {
       updatedTypes = coordinates.type.filter((type) => type !== value);
     }
     setCoordinates({ ...coordinates, type: updatedTypes });
-  };
-
-  const updateRadius = (e) => {
-    const radius = parseInt(e.target.value, 10);
-    setCoordinates({ ...coordinates, radius });
   };
 
   const handleStartTimeChange = (e) => {
@@ -130,7 +133,7 @@ const App = () => {
             <label>My Location</label>
             <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
             <label>My Friend's Location</label>
-            <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
+            <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} value={friendLocation} />
           </div>
           <div>
             <label>
@@ -265,7 +268,7 @@ const App = () => {
             {JSON.stringify(coordinates, null, 2)}
           </pre> */}
           <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
-            Submit
+            Enter Preferences
           </button>
         </>
       );
