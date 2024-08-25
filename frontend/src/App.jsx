@@ -3,6 +3,7 @@ import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import axios from "axios";
 import ResultsDisplay from "./components/ResultsDisplay";
 import ItineraryComponent from "./components/ItineraryComponent";
+import FriendsBarComponent from "./components/FriendsBarComponent";
 import './App.css';
 
 const App = () => {
@@ -20,8 +21,10 @@ const App = () => {
     "date": "",
   });
   const [selectedResults, setSelectedResults] = useState([]);
+  const [markerData, setMarkerData] = useState([]);
   const [response, setResponse] = useState(null);
   const mapRef = useRef(null);
+  const [mapInstance, setMapInstance] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // Default to 0,0 initially
 
   const updateCoordinates = (index, lat, lng) => {
@@ -72,14 +75,6 @@ const App = () => {
     }
   };
 
-  const handleItinerarySubmit = async (selectedPlaces) => {
-    try {
-      const response = await axios.post('http://localhost:3001/api/gemini', selectedPlaces);
-      setItinerary(response.data); // Store the itinerary data returned from the server
-    } catch (error) {
-      console.error('Error creating itinerary:', error);
-    }
-  };
 
   const isSubmitDisabled = () => {
     const { locations, type, radius, startTime, endTime, date } = coordinates;
@@ -88,7 +83,8 @@ const App = () => {
     return !(allLocationsFilled && allFieldsFilled);
   };
 
-  const handleSelect = (result) => {
+  const handleSelect = (ticked, result) => {
+    setMarkerData(ticked);
     setSelectedResults(result);
     // You can also handle the selection further here
   };
@@ -277,39 +273,53 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (mapInstance) {
+      addMarkers(markerData);
+    }
+  }, [mapInstance, markerData]);
+
+
+  const addMarkers = (results) => {
+    if (mapInstance && results) {
+      results.forEach(place => {
+        new window.google.maps.Marker({
+          position: { lat: place.location.lat, lng: place.location.lng },
+          map: mapInstance,
+          title: place.place,
+        });
+      });
+    }
+  };
+
+
   const initializeMap = () => {
-    // Set the default coordinates to the user's current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setMapCenter({ lat: latitude, lng: longitude });
-
-          new window.google.maps.Map(mapRef.current, {
+          const map = new window.google.maps.Map(mapRef.current, {
             center: { lat: latitude, lng: longitude },
             zoom: 12,
           });
+          setMapInstance(map);
         },
         () => {
-          // Handle the case where the user denies location access
           const defaultCenter = { lat: -33.8688, lng: 151.2093 }; // Sydney coordinates
-          setMapCenter(defaultCenter);
-
-          new window.google.maps.Map(mapRef.current, {
+          const map = new window.google.maps.Map(mapRef.current, {
             center: defaultCenter,
             zoom: 12,
           });
+          setMapInstance(map);
         }
       );
     } else {
-      // Handle the case where Geolocation is not supported
       const defaultCenter = { lat: -33.8688, lng: 151.2093 }; // Sydney coordinates
-      setMapCenter(defaultCenter);
-
-      new window.google.maps.Map(mapRef.current, {
+      const map = new window.google.maps.Map(mapRef.current, {
         center: defaultCenter,
         zoom: 12,
       });
+      setMapInstance(map);
     }
   };
 

@@ -99,6 +99,15 @@ button {
     transition: background-color 0.3s, opacity 0.3s;
 }
 
+.marker-content {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+}
+
 button:hover {
     background-color: #0056b3;
 }

@@ -32,11 +32,11 @@ const ResultsDisplay = ({ results, onSelect }) => {
             console.log('Response:', response.data.itinerary);
 
             // Update checkedPlaces with the response data
-            setCheckedPlaces(response.data.itinerary);
+            // setCheckedPlaces(response.data.itinerary);
 
             // Call onSelect with the response data
             if (onSelect) {
-                onSelect(response.data.itinerary);
+                onSelect(checkedPlaces, response.data.itinerary);
             }
         } catch (error) {
             console.error('Error sending data:', error);
