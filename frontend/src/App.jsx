@@ -261,9 +261,9 @@ const App = () => {
               />
             </label>
           </div>
-          <pre>
+          {/* <pre>
             {JSON.stringify(coordinates, null, 2)}
-          </pre>
+          </pre> */}
           <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
             Submit
           </button>
