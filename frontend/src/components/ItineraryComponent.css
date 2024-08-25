@@ -1,0 +1,63 @@
+.itinerary-container {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: calc(100vh - 120px);
+    /* Adjust based on the height of your sidebar */
+}
+
+.itinerary-container h3 {
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.itinerary-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.itinerary-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.itinerary-item:last-child {
+    border-bottom: none;
+}
+
+.itinerary-details {
+    margin-bottom: 8px;
+}
+
+.itinerary-name {
+    font-weight: bold;
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.itinerary-description {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.itinerary-times {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.itinerary-start-time,
+.itinerary-end-time {
+    display: block;
+    margin-top: 4px;
+}

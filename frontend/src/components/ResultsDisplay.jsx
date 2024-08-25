@@ -29,16 +29,20 @@ const ResultsDisplay = ({ results, onSelect }) => {
 
         try {
             const response = await axios.post('http://localhost:3001/api/gemini', dataToSend);
-            console.log('Response:', response.data);
+            console.log('Response:', response.data.itinerary);
 
+            // Update checkedPlaces with the response data
+            setCheckedPlaces(response.data.itinerary);
+
+            // Call onSelect with the response data
             if (onSelect) {
-                onSelect(checkedPlaces);
+                onSelect(response.data.itinerary);
             }
         } catch (error) {
             console.error('Error sending data:', error);
         }
 
-        console.log(checkedPlaces);
+        // console.log(checkedPlaces);
     };
 
     return (

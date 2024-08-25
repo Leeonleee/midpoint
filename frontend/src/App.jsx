@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import GoogleMapsAutocomplete from "./components/GoogleMapsAutocomplete";
 import axios from "axios";
 import ResultsDisplay from "./components/ResultsDisplay";
+import ItineraryComponent from "./components/ItineraryComponent";
 import './App.css';
 
 const App = () => {
@@ -18,9 +19,8 @@ const App = () => {
     "endTime": "",
     "date": "",
   });
-
+  const [selectedResults, setSelectedResults] = useState([]);
   const [response, setResponse] = useState(null);
-  const [selectedResult, setSelectedResult] = useState(null); // Add state for selected result
   const mapRef = useRef(null);
   const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // Default to 0,0 initially
 
@@ -29,6 +29,10 @@ const App = () => {
     newCoordinates.locations[index] = { lat, lng };
     setCoordinates(newCoordinates);
   };
+
+  // const handleSelectTwo = (selectedPlaces) => {
+  //   setSelectedResults2(selectedPlaces); // Update state with selected results
+  // };
 
   const handleTypeChange = (e) => {
     const { value, checked } = e.target;
@@ -68,6 +72,15 @@ const App = () => {
     }
   };
 
+  const handleItinerarySubmit = async (selectedPlaces) => {
+    try {
+      const response = await axios.post('http://localhost:3001/api/gemini', selectedPlaces);
+      setItinerary(response.data); // Store the itinerary data returned from the server
+    } catch (error) {
+      console.error('Error creating itinerary:', error);
+    }
+  };
+
   const isSubmitDisabled = () => {
     const { locations, type, radius, startTime, endTime, date } = coordinates;
     const allLocationsFilled = locations.every(coord => coord.lat && coord.lng);
@@ -76,7 +89,7 @@ const App = () => {
   };
 
   const handleSelect = (result) => {
-    setSelectedResult(result);
+    setSelectedResults(result);
     // You can also handle the selection further here
   };
 
@@ -84,6 +97,180 @@ const App = () => {
     setResponse(null);
   };
 
+  const renderSidebarContent = () => {
+    if (selectedResults.length > 0) {
+      console.log("HIIII")
+      console.log(selectedResults.length)
+      return (
+        <ItineraryComponent selectedResults={selectedResults} />
+        // <div>
+        //   <h3>Selected Itinerary</h3>
+        //   <ul>
+        //     {selectedResults2.map((result, index) => (
+        //       <li key={index}>{result.displayName}</li>
+        //     ))}
+        //   </ul>
+        // </div>
+      );
+    } else if (response) {
+      console.log("RESPONSE")
+      return (
+        <div id="results-display-container">
+          <ResultsDisplay
+            results={response.places || []}
+            onSelect={handleSelect}
+            onClose={handleCloseResults}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <>
+          <div id="autocomplete-bars">
+            <label>My Location</label>
+            <GoogleMapsAutocomplete index={0} updateCoordinates={updateCoordinates} />
+            <label>My Friend's Location</label>
+            <GoogleMapsAutocomplete index={1} updateCoordinates={updateCoordinates} />
+          </div>
+          <div>
+            <label>
+              Radius (m)
+              <select value={coordinates.radius} onChange={(e) => setCoordinates({ ...coordinates, radius: parseInt(e.target.value, 10) })}>
+                <option value={500}>500</option>
+                <option value={1000}>1000</option>
+                <option value={2000}>2000</option>
+                <option value={5000}>5000</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                value="restaurant"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("restaurant")}
+              />
+              Restaurant
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="amusement_park"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("amusement_park")}
+              />
+              Amusement Park
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="art_gallery"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("art_gallery")}
+              />
+              Art Gallery
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="cafe"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("cafe")}
+              />
+              Cafe
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="gym"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("gym")}
+              />
+              Gym
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="bar"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("bar")}
+              />
+              Bar
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="library"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("library")}
+              />
+              Library
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="movie_theatre"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("movie_theatre")}
+              />
+              Movie Theatre
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="museum"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("museum")}
+              />
+              Museum
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="tourist_attraction"
+                onChange={handleTypeChange}
+                checked={coordinates.type.includes("tourist_attraction")}
+              />
+              Tourist Attraction
+            </label>
+          </div>
+          <div>
+            <label>
+              Date
+              <input
+                type="date"
+                value={coordinates.date}
+                onChange={handleDateChange}
+              />
+            </label>
+            <label>
+              Start Time
+              <input
+                type="time"
+                value={coordinates.startTime}
+                onChange={handleStartTimeChange}
+              />
+            </label>
+            <label>
+              End Time
+              <input
+                type="time"
+                value={coordinates.endTime}
+                onChange={handleEndTimeChange}
+              />
+            </label>
+          </div>
+          <pre>
+            {JSON.stringify(coordinates, null, 2)}
+          </pre>
+          <button onClick={handleSubmit} disabled={isSubmitDisabled()}>
+            Submit
+          </button>
+        </>
+      );
+    }
+  };
   useEffect(() => {
     if (window.google && window.google.maps) {
       initializeMap();
@@ -133,10 +320,10 @@ const App = () => {
       </div>
       <div id="container">
         <div id="sidebar">
-          {response ? (
+          {/* {response ? (
             <div id="results-display-container">
               <ResultsDisplay
-                results={response.places || []} // Adjust according to your response structure
+                results={response.places || []}
                 onSelect={handleSelect}
                 onClose={handleCloseResults}
               />
@@ -285,7 +472,8 @@ const App = () => {
                 Submit
               </button>
             </>
-          )}
+          )}*/}
+          {renderSidebarContent()}
         </div>
         <div id="map" ref={mapRef}></div>
       </div>
