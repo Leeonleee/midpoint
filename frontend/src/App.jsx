@@ -11,8 +11,6 @@ import './App.css';
 const App = () => {
   const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/suggestions`;
 
-  console.log(baseUrl);
-
   
   const [coordinates, setCoordinates] = useState({
     "locations": [
@@ -338,7 +336,9 @@ const App = () => {
   return (
     <div>
       <div className='header'>
-        <img src="src/assets/header.png" alt="Midpoint Logo" />
+        {/* <img src="/src/assets/header.png" alt="Midpoint Logo" /> */}
+        <h1>midpoint</h1>
+        <p>where friends meet <span>in between</span>></p>
       </div>
       <div id="container">
         <div id="sidebar">

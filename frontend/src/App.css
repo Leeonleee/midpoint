@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('src/assets/midpoint background (Desktop Wallpaper).png');
+    background-image: url('/src/assets/midpoint background (Desktop Wallpaper).png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -14,10 +14,37 @@ body {
 }
 
 .header {
-    text-align: center;
+    /* text-align: center;
     margin-bottom: 0.01rem;
-    margin-top: 0.01rem;
+    margin-top: 0.01rem; */
+
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: #7C50A5;
 }
+
+.header h1 {
+    font-size: 72px;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header p {
+    font-size: 14px;
+    margin: 0;
+    position: relative;
+    top: -18px;
+    left: -35px;
+    z-index: 0;
+    font-weight: bold;
+}
+
+.header p span {
+    display: inline-block;
+    margin-left: 14px; /* Adjust spacing between subtext parts */
+}
+
 
 .header img {
     width: 500px;
