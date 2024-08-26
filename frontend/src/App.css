@@ -35,8 +35,8 @@ body {
     font-size: 14px;
     margin: 0;
     position: relative;
-    top: -17px;
-    left: -41px;
+    top: -17px; /* lower = more to the top */
+    left: -39px; /* lower = more to the right */
     z-index: 0;
     font-weight: bold;
 }

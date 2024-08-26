@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "build-frontend": "npm run build --prefix ../frontend",
-    "move-assets": "mkdir -p dist && copyfiles -f ../frontend/dist/**/* ./dist/assets",
+    "move-assets": "mkdir dist && copyfiles -f ../frontend/dist/**/* ./dist/assets",
     "move-dist": "copyfiles -f ../frontend/dist/** ./dist",
     "build": "npm run build-frontend && npm run move-assets && npm run move-dist"
   },
