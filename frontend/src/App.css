@@ -30,12 +30,13 @@ body {
     z-index: 1;
 }
 
+
 .header p {
     font-size: 14px;
     margin: 0;
     position: relative;
-    top: -18px;
-    left: -35px;
+    top: -17px;
+    left: -41px;
     z-index: 0;
     font-weight: bold;
 }

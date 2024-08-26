@@ -338,7 +338,7 @@ const App = () => {
       <div className='header'>
         {/* <img src="/src/assets/header.png" alt="Midpoint Logo" /> */}
         <h1>midpoint</h1>
-        <p>where friends meet <span>in between</span>></p>
+        <p>where friends meet <span>in between</span></p>
       </div>
       <div id="container">
         <div id="sidebar">
