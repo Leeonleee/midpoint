@@ -4,9 +4,9 @@ const router = require('express').Router()
 const example_itinerary = require('../example_itinerary.js')
 
 
-const key = process.env.GOOGLE_API_KEY;
+const key = process.env.VITE_GOOGLE_API_KEY;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 module.exports = router
 
@@ -66,7 +66,7 @@ const getPlaceDetails = async (placeId) => {
       const { data } = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
         params: {
           place_id: placeId,
-          key: process.env.GOOGLE_API_KEY,
+          key: process.env.VITE_GOOGLE_API_KEY,
         },
       });
       return data.result; // Return detailed place information
@@ -104,7 +104,7 @@ const getPlaceDetails = async (placeId) => {
             type: singleType,
             language: language,
             region: region,
-            key: process.env.GOOGLE_API_KEY,
+            key: process.env.VITE_GOOGLE_API_KEY,
             rankby: 'prominence',
           },
         });

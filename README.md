@@ -18,3 +18,12 @@ We learnt a high degree in how to create an effective and user friendly frontend
 
 # What's next for Project
 We desire to add extra features to this project given that we have created an initial MVP. Some examples of further features that we could add include: Providing travel methods for each person to go to the relevant restaurant/activity, accounting for travel times between each activity, options for different types of hangouts (e.g. friend, date) and also a choice for how much money the person is willing to spend. These changes will allow the program to excel further in catering towards different users needs and therefore become more user friendly.
+
+# How to run the project
+- Create a .env file in the backend and frontend directories with the following names:
+    - GOOGLE_API_KEY={Your Google Maps API key}
+    - GEMINI_API_KEY={Your Google Gemini API key}
+    - VITE_GOOGLE_API_KEY={Your Google Maps API key}
+    - VITE_GEMINI_API_KEY={Your Google Gemini API key}
+    - VITE_API_BASE_URL=http://localhost:3001/api
+- Change VITE_API_BASE_URL to `api` once frontend and backend are integrated

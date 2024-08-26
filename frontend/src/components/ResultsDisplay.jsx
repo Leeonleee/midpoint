@@ -3,6 +3,8 @@ import axios from 'axios';
 import './ResultsDisplay.css';
 
 const ResultsDisplay = ({ results, onSelect }) => {
+    const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/gemini`;
+
     const [checkedPlaces, setCheckedPlaces] = useState([]);
 
     const handleCheckboxChange = (place) => {
@@ -28,7 +30,7 @@ const ResultsDisplay = ({ results, onSelect }) => {
         }));
 
         try {
-            const response = await axios.post('http://localhost:3001/api/gemini', dataToSend);
+            const response = await axios.post(baseUrl, dataToSend);
             console.log('Response:', response.data.itinerary);
 
             // Update checkedPlaces with the response data

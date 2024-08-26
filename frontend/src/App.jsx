@@ -6,9 +6,14 @@ import ItineraryComponent from "./components/ItineraryComponent";
 import FriendsBarComponent from "./components/FriendsBarComponent";
 import './App.css';
 
-const App = () => {
-  const baseUrl = 'http://localhost:3001/api/suggestions';
 
+
+const App = () => {
+  const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/suggestions`;
+
+  console.log(baseUrl);
+
+  
   const [coordinates, setCoordinates] = useState({
     "locations": [
       { "lat": "", "lng": "" },
