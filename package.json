@@ -1,0 +1,16 @@
+{
+  "name": "midpoint",
+  "version": "1.0.0",
+  "description": "Plagued by both indecision as well as the annoyance to travel far to meet up with friends, midpoint was born. Here, we wanted to create a website that found the midpoint between two friends, generating a list of activities/restaurants for a quick catchup.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-all": "npm install && cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "start": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
