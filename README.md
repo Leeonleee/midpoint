@@ -1,3 +1,33 @@
+# Installation
+
+## Program Setup
+### Introduction
+- Please make sure you are on/download the `main` branch, as that contains the latest program code
+
+### API Keys
+- In the `backend` and `frontend` folder, you will need to create an `.env` file, which will contain the relevant API keys. The file must follow this format:
+
+```
+GOOGLE_API_KEY=YOUR_MAPS_API_KEY_HERE
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+VITE_GOOGLE_API_KEY=YOUR_MAPS_API_KEY_HERE
+VITE_GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+VITE_API_BASE_URL=http://localhost:3001/api
+```
+
+### Installing Node.js
+- Please follow the instructions in this link to install Node.js (npm will also be installed)
+    - https://nodejs.org/en/download/package-manager/
+
+
+## Running the Program
+- Once you have the `.env` files set and Node.js installed, you can start the program
+- Ensure you are in the root directory of the project (`midpoint`)
+- Run the command `npm run start`
+    - This will install all dependencies and start the frontend/backend
+- To access the program, go to `http://localhost:5173/`
+
+
 # Inspiration
 Plagued by both indecision as well as the annoyance to travel far to meet up with friends, midpoint was born. Here, we wanted to create a website that found the midpoint between two friends, generating a list of activities/restaurants for a quick catchup.
 
