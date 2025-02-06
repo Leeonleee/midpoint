@@ -1,5 +1,5 @@
 # Demo
-[![Video Demo](https://fastly.picsum.photos/id/208/200/300.jpg?hmac=MnC8s7YHdlG81eGO_ZmX1VbjLAYw-jIYEe74kkfvuwc)](https://www.youtube.com/watch?v=kd531KxHu0s)
+[![Video Demo](https://github.com/Leeonleee/midpoint/blob/main/images/Screenshot%202025-02-06%20at%208.35.18%E2%80%AFPM.png)](https://www.youtube.com/watch?v=kd531KxHu0s)
 
 # Installation
 
