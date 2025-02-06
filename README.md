@@ -23,8 +23,9 @@ VITE_API_BASE_URL=http://localhost:3001/api
 ## Running the Program
 - Once you have the `.env` files set and Node.js installed, you can start the program
 - Ensure you are in the root directory of the project (`midpoint`)
-- Run the command `npm run start`
+- Run the command `npm run install-all`
     - This will install all dependencies and start the frontend/backend
+- Run the command `npm run start`
 - To access the program, go to `http://localhost:5173/`
 
 
