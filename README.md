@@ -1,3 +1,6 @@
+# Demo
+[![Video Demo](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=kd531KxHu0s)
+
 # Installation
 
 ## Program Setup
