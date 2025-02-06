@@ -1,9 +1,8 @@
 # Demo
-[![Video Demo](https://github.com/Leeonleee/midpoint/blob/main/images/Screenshot%202025-02-06%20at%208.35.18%E2%80%AFPM.png)](https://www.youtube.com/watch?v=kd531KxHu0s)
-
 <a href="https://www.youtube.com/watch?v=kd531KxHu0s" target="_blank" rel="noopener noreferrer">
   <img src="https://github.com/Leeonleee/midpoint/blob/main/images/Screenshot%202025-02-06%20at%208.35.18%E2%80%AFPM.png" alt="Video Demo">
 </a>
+
 # Installation
 
 ## Program Setup
