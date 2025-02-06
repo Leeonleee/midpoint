@@ -1,5 +1,5 @@
 # Demo
-[![Video Demo]([https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg](https://fastly.picsum.photos/id/1010/200/300.jpg?hmac=OCwsVZA1224psjwFUcMnXdXvV1pT7KnfC-F5gxK-rg8))](https://www.youtube.com/watch?v=kd531KxHu0s)
+[![Video Demo](https://fastly.picsum.photos/id/1010/200/300.jpg?hmac=OCwsVZA1224psjwFUcMnXdXvV1pT7KnfC-F5gxK-rg8)](https://www.youtube.com/watch?v=kd531KxHu0s)
 
 # Installation
 
